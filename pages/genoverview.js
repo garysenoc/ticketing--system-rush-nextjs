@@ -1,25 +1,25 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import { useState, useEffect } from "react";
-import useLocalStorage from "use-local-storage";
-import axios from "axios";
-import Mainlayout from "../components/Layout/Mainlayout";
-import Box from "../components/UI/Box";
-import BarChart from "../components/UI/BarChart";
-import Button from "components/UI/Buttons/Button.jsx";
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Home.module.css';
+import { useState, useEffect } from 'react';
+import useLocalStorage from 'use-local-storage';
+import axios from 'axios';
+import Mainlayout from '../components/Layout/Mainlayout';
+import Box from '../components/UI/Box';
+import BarChart from '../components/UI/BarChart';
+import Button from 'components/UI/Buttons/Button.jsx';
 
 export default function Login() {
   const [data, setData] = useState();
-  const [id, setId] = useLocalStorage("id", "");
+  const [id, setId] = useLocalStorage('id', '');
 
   const [chartData, setChartData] = useState({
-    labels: ["OPEN", "RESOLVED", "VOIDED", "REOPENED"],
+    labels: ['OPEN', 'RESOLVED', 'VOIDED', 'REOPENED'],
     datasets: [
       {
-        label: "Perfomance Report",
+        label: 'Perfomance Report',
         data: [10, 4, 5, 8],
-        backgroundColor: ["#75B9E0", "#5DBD55", "#FECB32", "#F3592D"],
+        backgroundColor: ['#75B9E0', '#5DBD55', '#FECB32', '#F3592D'],
       },
     ],
   });
@@ -44,7 +44,7 @@ export default function Login() {
   useEffect(() => {
     getData();
 
-    if (id == "" || id == null) {
+    if (id == '' || id == null) {
       // window.location.replace('/login');
     }
 
@@ -52,62 +52,80 @@ export default function Login() {
   }, []);
 
   return (
-    <Mainlayout className="self-start flex-1">
-      <h1 className="my-4 text-3xl font-bold ml-6">Perfomance Report</h1>
-      <div className="flex gap-4">
-        <Card value="1" label="Open" />
-        <Card value="2" label="Resolved" />
-        <Card value="0" label="Voided" />
-        <Card value="0" label="Reopened" />
+    <Mainlayout className='self-start flex-1'>
+      <h1 className='my-4 text-3xl font-bold ml-6'>Perfomance Report</h1>
+      <div className='flex gap-4'>
+        <Card
+          value='1'
+          label='Open'
+        />
+        <Card
+          value='2'
+          label='Resolved'
+        />
+        <Card
+          value='0'
+          label='Voided'
+        />
+        <Card
+          value='0'
+          label='Reopened'
+        />
       </div>
-      <div className="mt-10 flex w-full">
-        <BarChart data={chartData} />
+      <div className='mt-10 flex w-full'>
+        <BarChart
+          data={chartData}
+          options={{ maintainAspectRatio: false }}
+        />
       </div>
-      <div className="overflow-x-auto mt-10">
-        <table className="min-w-full divide-y-2 divide-neutral-200 text-sm">
-          <thead className="bg-tertiary-500">
+      <div className='overflow-x-auto mt-10'>
+        <table className='min-w-full divide-y-2 divide-neutral-200 text-sm'>
+          <thead className='bg-tertiary-500'>
             <tr>
-              <th className="whitespace-nowrap px-4 py-2.5 text-left font-semibold text-neutral-900">
+              <th className='whitespace-nowrap px-4 py-2.5 text-left font-semibold text-neutral-900'>
                 Ticket Number
               </th>
-              <th className="whitespace-nowrap px-4 py-2.5 text-left font-semibold text-neutral-900">
+              <th className='whitespace-nowrap px-4 py-2.5 text-left font-semibold text-neutral-900'>
                 Name
               </th>
-              <th className="whitespace-nowrap px-4 py-2.5 text-left font-semibold text-neutral-900">
+              <th className='whitespace-nowrap px-4 py-2.5 text-left font-semibold text-neutral-900'>
                 Document
               </th>
-              <th className="whitespace-nowrap px-4 py-2.5 text-left font-semibold text-neutral-900">
+              <th className='whitespace-nowrap px-4 py-2.5 text-left font-semibold text-neutral-900'>
                 Date Created
               </th>
-              <th className="whitespace-nowrap px-4 py-2.5 text-left font-semibold text-neutral-900">
+              <th className='whitespace-nowrap px-4 py-2.5 text-left font-semibold text-neutral-900'>
                 Status
               </th>
-              <th className="whitespace-nowrap px-4 py-2.5 text-left font-semibold text-neutral-900"></th>
+              <th className='whitespace-nowrap px-4 py-2.5 text-left font-semibold text-neutral-900'></th>
             </tr>
           </thead>
-          <tbody className="divide-y bg-tertiary-200 divide-gray-200 mt-2">
-            <tr className="hover:bg-gray-200">
-              <td className="whitespace-nowrap px-4 py-2.5 first-of-type:font-semibold text-neutral-900">
+          <tbody className='divide-y bg-tertiary-200 divide-gray-200 mt-2'>
+            <tr className='hover:bg-gray-200'>
+              <td className='whitespace-nowrap px-4 py-2.5 first-of-type:font-semibold text-neutral-900'>
                 1
               </td>
 
-              <td className="whitespace-nowrap px-4 py-2.5 first-of-type:font-semibold text-neutral-900">
+              <td className='whitespace-nowrap px-4 py-2.5 first-of-type:font-semibold text-neutral-900'>
                 Gary
               </td>
 
-              <td className="whitespace-nowrap px-4 py-2.5 first-of-type:font-semibold text-neutral-900">
+              <td className='whitespace-nowrap px-4 py-2.5 first-of-type:font-semibold text-neutral-900'>
                 Document
               </td>
 
-              <td className="whitespace-nowrap px-4 py-2.5 first-of-type:font-semibold text-neutral-900">
+              <td className='whitespace-nowrap px-4 py-2.5 first-of-type:font-semibold text-neutral-900'>
                 12/05/2022
               </td>
 
-              <td className="whitespace-nowrap px-4 py-2.5 first-of-type:font-semibold text-neutral-900">
+              <td className='whitespace-nowrap px-4 py-2.5 first-of-type:font-semibold text-neutral-900'>
                 Resolved
               </td>
-              <td className="whitespace-nowrap px-4 py-2.5 first-of-type:font-semibold text-neutral-900">
-                <Button size="sm" color="yellow">
+              <td className='whitespace-nowrap px-4 py-2.5 first-of-type:font-semibold text-neutral-900'>
+                <Button
+                  size='sm'
+                  color='yellow'
+                >
                   VIEW
                 </Button>
               </td>
@@ -120,9 +138,9 @@ export default function Login() {
 }
 
 const Card = ({ value, label }) => (
-  <div className="flex flex-col items-center justify-center gap-2 text-center bg-primary-500 w-32 h-32 rounded-lg">
-    <span className="text-4xl font-bold">{value}</span>
-    <span className="font-semibold">{label}</span>
+  <div className='flex flex-col items-center justify-center gap-2 text-center bg-primary-500 w-32 h-32 rounded-lg'>
+    <span className='text-4xl font-bold'>{value}</span>
+    <span className='font-semibold'>{label}</span>
   </div>
 );
 /* <div style={{ margin: "0%" }}>
@@ -274,3 +292,4 @@ const Card = ({ value, label }) => (
   </table>
 </div>
 </div> */
+

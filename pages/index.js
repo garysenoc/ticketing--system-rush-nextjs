@@ -1,40 +1,44 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import useLocalStorage from "use-local-storage";
-import { useEffect } from "react";
-import Mainlayout from "components/Layout/Mainlayout";
-import Box from "components/UI/Box";
-import Button from "components/UI/Buttons/Button";
-import Link from "next/link";
-import Logo from "public/jhslogo.png";
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Home.module.css';
+import useLocalStorage from 'use-local-storage';
+import { useEffect } from 'react';
+import Mainlayout from 'components/Layout/Mainlayout';
+import Box from 'components/UI/Box';
+import Button from 'components/UI/Buttons/Button';
+import Link from 'next/link';
+import Logo from 'public/jhslogo.png';
 
 export default function Home() {
-  const [username, setUsername] = useLocalStorage("name", "hello");
+  const [username, setUsername] = useLocalStorage('name', 'hello');
 
   useEffect(() => {
-    setUsername("hello");
+    setUsername('hello');
     console.log(username);
   }, []);
 
   return (
     <Mainlayout>
-      <div className="flex items-center justify-center">
-        <Box className="w-[26rem]">
-          <div className="flex flex-col items-center">
-            <div className="relative w-24 h-24">
-              <Image src={Logo} alt="Logo" fill />
+      <div className='flex items-center justify-center'>
+        <Box className='w-[26rem]'>
+          <div className='flex flex-col items-center'>
+            <div className='relative w-24 h-24'>
+              <Image
+                src={Logo}
+                alt='Logo'
+                fill
+              />
             </div>
-            <h2 className="text-2xl font-bold my-6">JHS: StuD ReqTics</h2>
-            <div className="flex flex-col gap-3 w-full">
-              <Link href="/instructions">
-                <Button>REQUEST TICKET</Button>
+            <h2 className='text-2xl font-bold my-6'>JHS: StuD ReqTics</h2>
+            <div className='flex flex-col gap-3 w-full'>
+              <Link href='/instructions'>
+                <Button>Request Ticket</Button>
               </Link>
-              <Link href="/login">
-                <Button>ADMIN LOGIN</Button>
+              <Link href='/login'>
+                <Button>Admin Login</Button>
               </Link>
-              <Link href="/tracking">
-                <Button>VIEW TICKET</Button>
+              <Link href='/tracking'>
+                <Button>View Ticket</Button>
               </Link>
             </div>
           </div>
@@ -91,3 +95,4 @@ export default function Home() {
 </div>
 </div> */
 }
+
