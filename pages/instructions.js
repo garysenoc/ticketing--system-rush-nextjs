@@ -10,7 +10,7 @@ import Link from "next/link";
 export default function Login() {
   return (
     <Mainlayout href="/">
-      <Box className="w-[38rem]">
+      <Box className="w-[38rem]" bordered>
         <div className="flex flex-col gap-6 items-center justify-center text-center font-medium">
           <div className="relative w-24 h-24">
             <Image src={Logo} alt="Logo" fill />

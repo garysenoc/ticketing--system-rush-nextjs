@@ -75,6 +75,7 @@ export default function Login() {
                 setAdminName(e.target.value);
               }}
               value={adminName}
+              edit
             />
             <TextField
               label="Job Title"
@@ -84,6 +85,7 @@ export default function Login() {
                 setJobTitle(e.target.value);
               }}
               value={jobTitle}
+              edit
             />
             <TextField
               label="Email Address"
@@ -93,6 +95,7 @@ export default function Login() {
                 setEmail(e.target.value);
               }}
               value={email}
+              edit
             />
           </div>
         </div>

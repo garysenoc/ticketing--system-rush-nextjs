@@ -48,7 +48,7 @@ export default function Login() {
   return (
     <Mainlayout href="/">
       <div className="flex items-center justify-center">
-        <Box className="w-[26rem]">
+        <Box className="w-[26rem]" bordered>
           <div className="flex flex-col items-center">
             <div className="relative w-24 h-24">
               <Image src={Logo} alt="Logo" fill />

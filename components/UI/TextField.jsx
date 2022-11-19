@@ -14,6 +14,7 @@ const TextField = ({
   size,
   fullWidth = false,
   onBlur,
+  edit = false,
 }) => {
   return (
     <div
@@ -34,9 +35,11 @@ const TextField = ({
           onChange={onChange}
           onBlur={onBlur}
         />
-        <div className={`z-10 absolute cursor-pointer ${TextIcon(size)}`}>
-          <MdMode />
-        </div>
+        {edit && (
+          <div className={`z-10 absolute cursor-pointer ${TextIcon(size)}`}>
+            <MdMode />
+          </div>
+        )}
       </div>
       {error !== "" && <ErrorMessage>{error}</ErrorMessage>}
     </div>
