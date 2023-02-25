@@ -1,35 +1,45 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
-import { useState } from 'react';
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
+import { useState, useCallback } from "react";
 
-import { useUploadFile } from 'react-firebase-hooks/storage';
-import { storage } from '../lib/firebase';
-import { ref, getStorage, uploadBytes, getDownloadURL } from 'firebase/storage';
-import ShortUniqueId from 'short-unique-id';
-import axios from 'axios';
+import { useUploadFile } from "react-firebase-hooks/storage";
+import { storage } from "../lib/firebase";
+import { ref, getStorage, uploadBytes, getDownloadURL } from "firebase/storage";
+import ShortUniqueId from "short-unique-id";
+import axios from "axios";
+import Mainlayout from "components/Layout/Mainlayout";
+import TextField from "components/UI/TextField";
+import SelectField from "components/UI/SelectField";
+import TextArea from "components/UI/TextArea";
+import Button from "components/UI/Buttons/Button";
+import Modal from "components/UI/Modal";
+import Logo from "public/jhslogo.png";
 
 export default function Login() {
-  const [name, setName] = useState('');
-  const [studentNumber, setStudentNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [contact, setContact] = useState('');
+  const [show, setShow] = useState(false);
+  const toggle = useCallback(() => setShow((state) => !state), []);
+
+  const [name, setName] = useState("");
+  const [studentNumber, setStudentNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [contact, setContact] = useState("");
   //   const [approvalClearanceSlipment, setApprovalClearanceSlipment] =
   //     useState('');
-  const [documentToBeRequested, setDocumentToBeRequested] = useState('');
-  const [deliveryOptions, setDeliveryOptions] = useState('');
-  const [specialRequest, setSpecialRequest] = useState('');
+  const [documentToBeRequested, setDocumentToBeRequested] = useState("");
+  const [deliveryOptions, setDeliveryOptions] = useState("Pickup");
+  const [specialRequest, setSpecialRequest] = useState("");
 
   function getFileExtention(filename) {
     return (
-      filename.substring(filename.lastIndexOf('.') + 1, filename.length) ||
+      filename.substring(filename.lastIndexOf(".") + 1, filename.length) ||
       filename
     );
   }
 
   const [uploadFile, uploading, snapshot] = useUploadFile();
-  const [filename, setFilename] = useState('');
-  const [fileLink, setFileLink] = useState('');
+  const [filename, setFilename] = useState("");
+  const [fileLink, setFileLink] = useState("");
 
   const uploadFileLink = async (selectedFile) => {
     try {
@@ -52,7 +62,7 @@ export default function Login() {
 
     const uniqueId = uid();
     axios
-      .post('http://localhost:5000/api/requestForm/createRequestForm', {
+      .post("http://localhost:5000/api/requestForm/createRequestForm", {
         name: name,
         studentNumber: studentNumber,
         email: email,
@@ -67,16 +77,17 @@ export default function Login() {
         (response) => {
           console.log(response);
           alert(
-            'You have successfully submitted a request, your reference id is ' +
-              uniqueId,
+            "You have successfully submitted a request, your reference id is " +
+              uniqueId
           );
-          window.location.replace('/');
+          window.location.replace("/");
         },
         (error) => {
-          alert('Please complete all the required fields');
+          alert("Please complete all the required fields");
           console.log(error);
-        },
+        }
       );
+    toggle();
     // try {
 
     //   const rawResponse = await fetch(
@@ -111,235 +122,334 @@ export default function Login() {
   };
 
   return (
-    <div style={{ margin: '0%' }}>
-      <div className='sidedesign'></div>
-      <div
-        className='textgeneral'
-        style={{ marginLeft: '5%', paddingTop: '50px' }}
-      >
-        <div className='requestform'> Request Form</div>
-        <div className='reqformleft'>
-          <form>
-            <label
-              htmlFor='username'
-              className='textform'
-            >
-              {' '}
-              Name
-            </label>
-            <br />
-            <input
-              type='text'
-              id='name'
-              name='name'
-              className='reqform1'
+    <>
+      <Mainlayout>
+        <div className="flex flex-col items-center gap-10 my-10 max-w-7xl">
+          <h2 className="inline-block text-secondary-500  bg-primary-500 font-bold text-xl px-10 py-2.5 rounded-lg">
+            Request Form
+          </h2>
+          <div className="grid grid-cols-2 justify-center items-center gap-4">
+            <TextField
+              label="Name"
+              placeholder=""
               onChange={(e) => {
                 setName(e.target.value);
               }}
               value={name}
             />
-          </form>
-        </div>
-        <div className='reqformright'>
-          <form>
-            <label
-              htmlFor='username'
-              className='textform'
-            >
-              {' '}
-              Student Number
-            </label>
-            <input
-              type='text'
-              id='name'
-              name='name'
-              className='reqform1'
+            <TextField
+              label="Student Number"
+              placeholder=""
               onChange={(e) => {
                 setStudentNumber(e.target.value);
               }}
               value={studentNumber}
             />
-          </form>
-        </div>
-        <div className='reqformleft'>
-          <form>
-            <label
-              htmlFor='username'
-              className='textform'
-            >
-              {' '}
-              Email
-            </label>
-            <br />
-            <input
-              type='text'
-              id='name'
-              name='name'
-              className='reqform1'
+            <TextField
+              label="Email"
+              placeholder=""
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
               value={email}
             />
-          </form>
-        </div>
-        <div className='reqformright'>
-          <form>
-            <label
-              htmlFor='username'
-              className='textform'
-            >
-              {' '}
-              Contact Number
-            </label>
-            <input
-              type='text'
-              id='name'
-              name='name'
-              className='reqform1'
+            <TextField
+              label="Contact Number"
+              placeholder=""
               onChange={(e) => {
                 setContact(e.target.value);
               }}
               value={contact}
             />
-          </form>
-        </div>
-        {/* <div className='reqformleft'>
-          <label
-            htmlFor='username'
-            className='textform'
-          >
-            {' '}
-            Approved Clearance Slip
-          </label>
-          <br />
-          <button
-            type='clearance slip'
-            className='reqform2'
-          >
-            Choose File{' '}
-          </button>
-          <div className='filenameform'>No File Chosen</div>
-        </div> */}
-        <div className='reqformright'>
-          <label
-            htmlFor='username'
-            className='textform'
-          >
-            {' '}
-            Approved Clearance Slip
-          </label>
-          <br />
-          <input
-            id='file'
-            name='file'
-            type='file'
-            className='reqform2'
-            onChange={(e) => {
-              const file = e.target.files ? e.target.files[0] : undefined;
-              uploadFileLink(file);
-            }}
-          />
-
-          <div className='filenameform'>
-            {filename == '' ? 'No File Chosen' : filename}
-          </div>
-        </div>
-        <div className='reqformleft'>
-          <form>
-            <label
-              htmlFor='username'
-              className='textform'
-            >
-              {' '}
-              Document to be Requested
-            </label>
-            <input
-              type='text'
-              id='name'
-              name='name'
-              className='reqform1'
+            <TextField
+              label="Approved Clearance Slip"
+              placeholder=""
+              type="file"
+            />
+            <TextField
+              label="Proof of Payment"
+              placeholder=""
+              type="file"
+              onChange={(e) => {
+                const file = e.target.files ? e.target.files[0] : undefined;
+                uploadFileLink(file);
+              }}
+            />
+            <TextField
+              label="Document to be requested"
+              placeholder=""
               onChange={(e) => {
                 setDocumentToBeRequested(e.target.value);
               }}
               value={documentToBeRequested}
             />
-          </form>
-        </div>
-        <div className='reqformright'>
-          <form>
-            <label
-              htmlFor='username'
-              className='textform'
-            >
-              {' '}
-              Delivery Options
-            </label>
-            <div className='reqform3'>
-              <select
-                name='delivery options'
-                id='delivery'
-                className='selectdelivery'
-                onChange={(e) => {
-                  setDeliveryOptions(e.target.value);
-                }}
-                value={deliveryOptions}
-              >
-                <option
-                  disabled
-                  selected
-                >
-                  {' '}
-                </option>
-                <option value='Pickup'>Pickup</option>
-                <option value='Grab'>Grab</option>
-                <option value='Lalamove'>Lalamove</option>
-                <option value='panda'>panda</option>
-              </select>
+            <SelectField
+              label="Delivery Option"
+              data={["Pickup", "Lalamove", "Grab", "Panda"]}
+              setSelected={setDeliveryOptions}
+              selected={deliveryOptions}
+            />
+            <TextArea
+              label="Special Request"
+              className="col-span-2"
+              onChange={(e) => {
+                setSpecialRequest(e.target.value);
+              }}
+              value={specialRequest}
+            />
+            <p className="col-span-2">
+              * Please ensure that you have proof of clearance approval and
+              proof of payment before <br /> submitting this form.
+            </p>
+            <div className="col-span-2 flex justify-end">
+              <Button onClick={async () => await submitForm()}>Confirm</Button>
             </div>
-          </form>
-        </div>
-        <div className='reqformspecial'>
-          <label
-            htmlFor='username'
-            className='textform'
-            style={{ marginLeft: '2.5%' }}
-          >
-            {' '}
-            Special Request
-          </label>
-          <br />
-          <input
-            type='text'
-            id='name'
-            name='name'
-            className='reqform4'
-            onChange={(e) => {
-              setSpecialRequest(e.target.value);
-            }}
-            value={specialRequest}
-          />
-        </div>
-        <div className='reqformspecial1'>
-          <div
-            className='textform2'
-            style={{ paddingTop: 0, marginLeft: '2.5%' }}
-          >
-            *Please ensure that you have proof of clearance approval and proof
-            of payment before submitting this form.
           </div>
         </div>
-        <div className='reqformspecial1'>
-          <button
-            href
-            className='button4'
-            onClick={async () => await submitForm()}
-          >
-            Confirm
-          </button>
+      </Mainlayout>
+      <Modal isOpen={show} toggle={toggle}>
+        <div className="flex flex-col items-center px-6">
+          <div className="relative w-24 h-24">
+            <Image src={Logo} alt="Logo" fill />
+          </div>
+          <h2 className="my-8 text-xl font-semibold">Request Sent.</h2>
+          <Button className="mt-12" fullWidth onClick={toggle}>
+            FINISH
+          </Button>
         </div>
-      </div>
-    </div>
+      </Modal>
+    </>
   );
 }
 
+{
+  /* <div style={{ margin: '0%' }}>
+<div className='sidedesign'></div>
+<div
+  className='textgeneral'
+  style={{ marginLeft: '5%', paddingTop: '50px' }}
+>
+  <div className='requestform'> Request Form</div>
+  <div className='reqformleft'>
+    <form>
+      <label
+        htmlFor='username'
+        className='textform'
+      >
+        {' '}
+        Name
+      </label>
+      <br />
+      <input
+        type='text'
+        id='name'
+        name='name'
+        className='reqform1'
+        onChange={(e) => {
+          setName(e.target.value);
+        }}
+        value={name}
+      />
+    </form>
+  </div>
+  <div className='reqformright'>
+    <form>
+      <label
+        htmlFor='username'
+        className='textform'
+      >
+        {' '}
+        Student Number
+      </label>
+      <input
+        type='text'
+        id='name'
+        name='name'
+        className='reqform1'
+        onChange={(e) => {
+          setStudentNumber(e.target.value);
+        }}
+        value={studentNumber}
+      />
+    </form>
+  </div>
+  <div className='reqformleft'>
+    <form>
+      <label
+        htmlFor='username'
+        className='textform'
+      >
+        {' '}
+        Email
+      </label>
+      <br />
+      <input
+        type='text'
+        id='name'
+        name='name'
+        className='reqform1'
+        onChange={(e) => {
+          setEmail(e.target.value);
+        }}
+        value={email}
+      />
+    </form>
+  </div>
+  <div className='reqformright'>
+    <form>
+      <label
+        htmlFor='username'
+        className='textform'
+      >
+        {' '}
+        Contact Number
+      </label>
+      <input
+        type='text'
+        id='name'
+        name='name'
+        className='reqform1'
+        onChange={(e) => {
+          setContact(e.target.value);
+        }}
+        value={contact}
+      />
+    </form>
+  </div>
+  <div className='reqformleft'>
+    <label
+      htmlFor='username'
+      className='textform'
+    >
+      {' '}
+      Approved Clearance Slip
+    </label>
+    <br />
+    <button
+      type='clearance slip'
+      className='reqform2'
+    >
+      Choose File{' '}
+    </button>
+    <div className='filenameform'>No File Chosen</div>
+  </div>
+  <div className='reqformright'>
+    <label
+      htmlFor='username'
+      className='textform'
+    >
+      {' '}
+      Approved Clearance Slip
+    </label>
+    <br />
+    <input
+      id='file'
+      name='file'
+      type='file'
+      className='reqform2'
+      onChange={(e) => {
+        const file = e.target.files ? e.target.files[0] : undefined;
+        uploadFileLink(file);
+      }}
+    />
+
+    <div className='filenameform'>
+      {filename == '' ? 'No File Chosen' : filename}
+    </div>
+  </div>
+  <div className='reqformleft'>
+    <form>
+      <label
+        htmlFor='username'
+        className='textform'
+      >
+        {' '}
+        Document to be Requested
+      </label>
+      <input
+        type='text'
+        id='name'
+        name='name'
+        className='reqform1'
+        onChange={(e) => {
+          setDocumentToBeRequested(e.target.value);
+        }}
+        value={documentToBeRequested}
+      />
+    </form>
+  </div>
+  <div className='reqformright'>
+    <form>
+      <label
+        htmlFor='username'
+        className='textform'
+      >
+        {' '}
+        Delivery Options
+      </label>
+      <div className='reqform3'>
+        <select
+          name='delivery options'
+          id='delivery'
+          className='selectdelivery'
+          onChange={(e) => {
+            setDeliveryOptions(e.target.value);
+          }}
+          value={deliveryOptions}
+        >
+          <option
+            disabled
+            selected
+          >
+            {' '}
+          </option>
+          <option value='Pickup'>Pickup</option>
+          <option value='Grab'>Grab</option>
+          <option value='Lalamove'>Lalamove</option>
+          <option value='panda'>panda</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div className='reqformspecial'>
+    <label
+      htmlFor='username'
+      className='textform'
+      style={{ marginLeft: '2.5%' }}
+    >
+      {' '}
+      Special Request
+    </label>
+    <br />
+    <input
+      type='text'
+      id='name'
+      name='name'
+      className='reqform4'
+      onChange={(e) => {
+        setSpecialRequest(e.target.value);
+      }}
+      value={specialRequest}
+    />
+  </div>
+  <div className='reqformspecial1'>
+    <div
+      className='textform2'
+      style={{ paddingTop: 0, marginLeft: '2.5%' }}
+    >
+      *Please ensure that you have proof of clearance approval and proof
+      of payment before submitting this form.
+    </div>
+  </div>
+  <div className='reqformspecial1'>
+    <button
+      href
+      className='button4'
+      onClick={async () => await submitForm()}
+    >
+      Confirm
+    </button>
+  </div>
+</div>
+</div> */
+}

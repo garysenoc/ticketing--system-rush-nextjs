@@ -4,6 +4,11 @@ import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 import axios from 'axios';
 import { useState } from 'react';
+import Mainlayout from 'components/Layout/Mainlayout';
+import Box from 'components/UI/Box';
+import Button from 'components/UI/Buttons/Button';
+import Logo from 'public/jhslogo.png';
+import TextField from 'components/UI/TextField';
 
 export default function Login() {
   const [referenceId, setReferenceId] = useState('');
@@ -30,51 +35,40 @@ export default function Login() {
   };
 
   return (
-    <div style={{ margin: '0%' }}>
-      <div className='topbar'>
-        <img
-          src='ustlogoedited.png'
-          style={{ height: '90%' }}
-        />
+    <Mainlayout>
+      <div className='flex items-center justify-center'>
+        <Box className='w-[26rem]'>
+          <div className='flex flex-col items-center'>
+            <div className='relative w-24 h-24'>
+              <Image
+                src={Logo}
+                alt='Logo'
+                fill
+              />
+            </div>
+            <h2 className='text-xl font-medium my-6'>Enter tracking number:</h2>
+            <div className='flex flex-col gap-6 w-full'>
+              <TextField
+                placeholder=''
+                onChange={(e) => {
+                  setReferenceId(e.target.value);
+                }}
+                value={referenceId}
+              />
+              <div className='flex justify-center'>
+                <Button
+                  onClick={() => {
+                    submit();
+                  }}
+                >
+                  VIEW TICKET
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Box>
       </div>
-      <br />
-      <br />
-      <div className='boxgeneral'>
-        <img
-          src='jhslogo.png'
-          className='logo1'
-        />
-        <center>
-          <p
-            className='textgeneral'
-            style={{ fontWeight: 10 }}
-          >
-            Enter Tracking Number:
-          </p>
-        </center>
-
-        <input
-          type='text'
-          className='forms1'
-          onChange={(e) => {
-            setReferenceId(e.target.value);
-          }}
-          value={referenceId}
-        />
-        {/* <Link href={'/ticketstatus'}> */}
-        <button
-          type='submit'
-          name='View Ticket'
-          className='submit1'
-          onClick={() => {
-            submit();
-          }}
-        >
-          View Ticket
-        </button>
-        {/* </Link> */}
-      </div>
-    </div>
+    </Mainlayout>
   );
 }
 
